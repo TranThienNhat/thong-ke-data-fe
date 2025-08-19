@@ -1,16 +1,20 @@
 import React from "react";
 
 interface Props {
-  data: { content: string; values: number }[];
+  value: number; // giá trị VNĐ
 }
 
-const DamageCard: React.FC<Props> = ({ data }) => {
-  const damage = data.find((item) => item.content === "Thiệt hại")?.values || 0;
+const DamageCard: React.FC<Props> = ({ value }) => {
+  const formatted = new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+    maximumFractionDigits: 0,
+  }).format(value);
 
   return (
-    <div className="p-3 bg-white text-center">
-      <h6 className="text-muted">Thiệt hại</h6>
-      <h4 className="fw-bold">{damage} tỷ</h4>
+    <div className="p-4 text-center">
+      <h6 className="text-muted">Thiệt hại tài sản</h6>
+      <h4 className="fw-bold">{formatted}</h4>
     </div>
   );
 };

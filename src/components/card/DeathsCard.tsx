@@ -1,17 +1,14 @@
 import React from "react";
 
 interface Props {
-  data: { content: string; values: number }[];
+  value: number;
 }
 
-const DeathsCard: React.FC<Props> = ({ data }) => {
-  const deaths =
-    data.find((item) => item.content === "Người chết")?.values || 0;
-
+const DeathsCard: React.FC<Props> = ({ value }) => {
   return (
-    <div className="p-3 bg-white text-center">
+    <div className="p-4 text-center">
       <h6 className="text-muted">Số người chết</h6>
-      <h4 className="fw-bold">{deaths}</h4>
+      <h4 className="fw-bold">{value}</h4>
     </div>
   );
 };

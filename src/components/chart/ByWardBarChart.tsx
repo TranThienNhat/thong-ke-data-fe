@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,34 +8,40 @@ import {
   Legend,
   type ChartData,
   type ChartOptions,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, ChartDataLabels);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend,
+  ChartDataLabels
+);
 
 interface ByWardBarChartProps {
   data: { content: string; values: number }[];
 }
 
 const ByWardBarChart: React.FC<ByWardBarChartProps> = ({ data }) => {
-  const labels = data.map(d => d.content);
-  const values = data.map(d => Number(d.values) || 0);
+  const labels = data.map((d) => d.content);
+  const values = data.map((d) => Number(d.values) || 0);
   const total = values.reduce((a, b) => a + b, 0) || 1; // tránh chia 0
 
-  const chartData: ChartData<'bar'> = {
+  const chartData: ChartData<"bar"> = {
     labels,
     datasets: [
       {
-        label: 'Số vụ',
-        data: values,                         // VẼ THEO SỐ TUYỆT ĐỐI
-        backgroundColor: '#5172a1',
+        label: "Số vụ",
+        data: values, // VẼ THEO SỐ TUYỆT ĐỐI
+        backgroundColor: "#5172a1",
         borderRadius: 4,
         maxBarThickness: 28,
       },
     ],
   };
-
 
   //   responsive: true,
   //   maintainAspectRatio: false,
@@ -79,8 +85,8 @@ const ByWardBarChart: React.FC<ByWardBarChartProps> = ({ data }) => {
   //     },
   //   },
   // };
-  const chartOptions: ChartOptions<'bar'> = {
-    indexAxis: 'y',
+  const chartOptions: ChartOptions<"bar"> = {
+    indexAxis: "y",
     responsive: true,
     maintainAspectRatio: false,
     layout: { padding: { right: 50, left: 0, top: 0, bottom: 0 } },
@@ -90,7 +96,11 @@ const ByWardBarChart: React.FC<ByWardBarChartProps> = ({ data }) => {
         callbacks: {
           label: (ctx) => {
             const raw = ctx.parsed.x ?? 0;
-            const total = (ctx.dataset.data as number[]).reduce((a, b) => a + (b as number), 0) || 1;
+            const total =
+              (ctx.dataset.data as number[]).reduce(
+                (a, b) => a + (b as number),
+                0
+              ) || 1;
             const pct = Math.round(((raw as number) / total) * 100);
             return `Số vụ: ${raw} (${pct}%)`;
           },
@@ -103,17 +113,17 @@ const ByWardBarChart: React.FC<ByWardBarChartProps> = ({ data }) => {
         // Khai báo 2 nhãn: "value" nằm *trong* cột, "percent" ở *đầu* cột
         labels: {
           value: {
-            formatter: (value: number, ctx) => `${value}`,   // số vụ
-            anchor: 'center',    // neo vào giữa thanh
-            align: 'center',     // căn giữa
+            formatter: (value: number, ctx) => `${value}`, // số vụ
+            anchor: "center", // neo vào giữa thanh
+            align: "center", // căn giữa
             color: (ctx) => {
               // nếu muốn tương phản tốt hơn, để trắng khi cột dài
               const data = ctx.dataset.data as number[];
               const total = data.reduce((a, b) => a + (b as number), 0) || 1;
-              const pct = Number(values) / total * 100;
-              return '#111827'; // trắng khi đủ dài, đen khi ngắn
+              const pct = (Number(values) / total) * 100;
+              return "#111827"; // trắng khi đủ dài, đen khi ngắn
             },
-            font: { weight: 'bold' },
+            font: { weight: "bold" },
             // Chỉ hiển thị khi cột đủ dài để text không bị tràn
             display: (ctx) => {
               const data = ctx.dataset.data as number[];
@@ -130,11 +140,11 @@ const ByWardBarChart: React.FC<ByWardBarChartProps> = ({ data }) => {
               const pct = ((Number(value) / total) * 100).toFixed(2);
               return `${pct}%`;
             },
-            anchor: 'end',       // neo về đầu cột (phía phải với bar ngang)
-            align: 'end',        // căn ra mép phải
-            offset: 4,           // lệch ra ngoài 1 chút
-            color: '#4b5563',
-            font: { weight: 'bold' },
+            anchor: "end", // neo về đầu cột (phía phải với bar ngang)
+            align: "end", // căn ra mép phải
+            offset: 4, // lệch ra ngoài 1 chút
+            color: "#4b5563",
+            font: { weight: "bold" },
           },
         },
       },

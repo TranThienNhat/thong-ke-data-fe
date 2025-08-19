@@ -1,17 +1,14 @@
 import React from "react";
 
 interface Props {
-  data: { content: string; values: number }[];
+  value: number;
 }
 
-const ForestAreaCard: React.FC<Props> = ({ data }) => {
-  const forest =
-    data.find((item) => item.content === "Diện tích rừng")?.values || 0;
-
+const ForestAreaCard: React.FC<Props> = ({ value }) => {
   return (
-    <div className="p-3 bg-white text-center">
+    <div className="p-4 text-center">
       <h6 className="text-muted">Diện tích rừng</h6>
-      <h4 className="fw-bold">{forest} ha</h4>
+      <h4 className="fw-bold">{value} ha</h4>
     </div>
   );
 };
