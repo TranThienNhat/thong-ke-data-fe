@@ -6,7 +6,7 @@ import Sidebar from "./../layout/Sidebar";
 
 const MainLayout: React.FC = () => {
   return (
-    <Container fluid style={{ height: "100vh" }}>
+    <Container fluid style={{ height: "100vh" , backgroundColor: "e6ecf8"}}>
       {/* Header */}
       <Row
         style={{ height: "60px", backgroundColor: "#0d6efd", color: "white" }}
@@ -19,7 +19,7 @@ const MainLayout: React.FC = () => {
        <Sidebar />
 
         {/* Content */}
-        <Col md={10} style={{ backgroundColor: "#e2e3e5" }} className="p-3">
+        <Col md={10} style={{ backgroundColor: "white" }} className="p-3">
           <Outlet />
         </Col>
       </Row>

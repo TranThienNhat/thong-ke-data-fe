@@ -1,6 +1,20 @@
 import React from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 import DoughnutChart from './chart/DonutChart';
+import ByWardBarChart from './chart/ByWardBarChart';
+const sampleData = [
+  { content: "Long Bình", values: 3 },
+  { content: "Thảo Điền", values: 2 },
+  { content: "An Khánh", values: 2 },
+  { content: "Trường Thọ", values: 1 },
+  { content: "Bình Trung Tây", values: 1 },
+  { content: "Thạnh Mỹ Lợi", values: 1 },
+  { content: "Linh Chiểu", values: 1 },
+];
+const sampleData2 = [
+  { content: 'Thiệt hại', values: 2 },
+  { content: 'Nguyên nhân', values: 1 },
+];
 
 const Charts: React.FC = () => {
   return (
@@ -27,25 +41,22 @@ const Charts: React.FC = () => {
           </Card>
         </Col>
         <Col md={4}>
-          <Card className="h-100">
-            <Card.Header className="bg-light">
-              <h6 className="mb-0">Phân tích theo địa điểm</h6>
-            </Card.Header>
+          <Card className="h-100 bg-purple-light">
             <Card.Body>
-              {/* <LocationAnalysis /> */}
+              <ByWardBarChart data={sampleData} />
             </Card.Body>
           </Card>
         </Col>
       </Row>
 
-      <Row className="mb-4">
+      <Row className="mb-4 ">
         <Col md={4}>
-          <Card className="h-100">
-            <Card.Text className="bg-light center p-2 ml-3">
+          <Card className="h-100 bg-purple-light">
+            <Card.Text className=" center p-2 ml-3">
               <h6 className="mb-0">Nguyên nhân</h6>
             </Card.Text>
             <Card.Body>
-              <DoughnutChart title="Nguyên nhân" />
+              <DoughnutChart data={sampleData2} />
             </Card.Body>
           </Card>
         </Col>
