@@ -1,51 +1,62 @@
 import React, { useMemo } from 'react';
-import {
-  Treemap,
-  ResponsiveContainer,
-} from 'recharts';
+import { Treemap, ResponsiveContainer } from 'recharts';
 
 type Item = { content: string; values: number; fill?: string };
 
 interface WardTreemapProps {
-  data: { content: string; values: number }[];  // truyền từ ngoài vào
+  data: { content: string; values: number }[];
+  colorOrder?: 'byValue' | 'byIndex'; // mặc định: byValue
 }
 
-export default function WardTreemap({ data }: WardTreemapProps) {
-  const { min, max } = useMemo(() => {
-    const vs = data.map(d => d.values);
-    return { min: Math.min(...vs), max: Math.max(...vs) };
-  }, [data]);
+export default function WardTreemap({ data, colorOrder = 'byValue' }: WardTreemapProps) {
+  // Tạo rank ổn định
+  const ranked = useMemo(() => {
+    const items = data.map((d, i) => ({ ...d, _i: i }));
 
-  const colorByValue = (v: number) => {
-    const hue = 0;   // 0 = đỏ
-    const sat = 72;  // % bão hoà
-    const L0 = 28;   // đỏ đậm
-    const L1 = 82;   // đỏ nhạt
-    const t = max === min ? 0.5 : 1 - (v - min) / (max - min);
+    if (colorOrder === 'byIndex') {
+      // Giảm dần theo thứ tự input
+      return items.map(d => ({ ...d, _rank: d._i }));
+    }
+
+    // byValue: sắp theo values DESC, tie-breaker theo index ASC
+    const sorted = [...items].sort((a, b) => (b.values - a.values) || (a._i - b._i));
+    const rankByIndex = new Map<number, number>();
+    sorted.forEach((d, rank) => rankByIndex.set(d._i, rank));
+    return items.map(d => ({ ...d, _rank: rankByIndex.get(d._i)! }));
+  }, [data, colorOrder]);
+
+  const n = ranked.length || 1;
+
+  // đỏ đậm -> đỏ nhạt theo rank (0 là đậm nhất)
+  const colorByRank = (rank: number) => {
+    const hue = 0;   // đỏ
+    const sat = 72;  // %
+    const L0 = 28;   // đậm
+    const L1 = 82;   // nhạt
+    const t = n === 1 ? 0 : rank / (n - 1); // 0..1
     const L = L0 + (L1 - L0) * t;
     return `hsl(${hue}, ${sat}%, ${L}%)`;
   };
 
   const coloredData: Item[] = useMemo(
-    () => data.map(it => ({ ...it, fill: colorByValue(it.values) })),
-    [data, min, max]
+    () =>
+      ranked.map(d => ({
+        content: d.content,
+        values: d.values,
+        fill: colorByRank(d._rank),
+      })),
+    [ranked, n]
   );
 
   const TreemapContent = (props: any) => {
-    const { x, y, width, height, content, values, fill } = props;
+    const { x, y, width, height, name, value, fill } = props; // name/value theo nameKey/dataKey
     if (!width || !height) return null;
-
     return (
       <g>
         <rect x={x} y={y} width={width} height={height} fill={fill} stroke="#fff" />
         {width > 60 && height > 34 && (
-          <text
-            x={x + 8}
-            y={y + height - 10}
-            fill="#fff"
-            fontSize={12}
-          >
-            {content} , {values}
+          <text x={x + 8} y={y + height - 10} fill="#fff" fontSize={12}>
+            {name}, {value}
           </text>
         )}
       </g>
