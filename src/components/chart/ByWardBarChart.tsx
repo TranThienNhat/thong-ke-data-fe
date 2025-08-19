@@ -36,7 +36,7 @@ const ByWardBarChart: React.FC<ByWardBarChartProps> = ({ data }) => {
     ],
   };
 
-  
+
   //   responsive: true,
   //   maintainAspectRatio: false,
   //   layout: { padding: { right: 30, left: 0, top: 0, bottom: 0 } },
@@ -83,7 +83,7 @@ const ByWardBarChart: React.FC<ByWardBarChartProps> = ({ data }) => {
     indexAxis: 'y',
     responsive: true,
     maintainAspectRatio: false,
-    layout: { padding: { right: 35, left: 0, top: 0, bottom: 0 } },
+    layout: { padding: { right: 50, left: 0, top: 0, bottom: 0 } },
     plugins: {
       legend: { display: false },
       tooltip: {
@@ -127,7 +127,7 @@ const ByWardBarChart: React.FC<ByWardBarChartProps> = ({ data }) => {
             formatter: (value: number, ctx) => {
               const data = ctx.dataset.data as number[];
               const total = data.reduce((a, b) => a + (b as number), 0) || 1;
-              const pct = Math.round((Number(value) / total) * 100);
+              const pct = ((Number(value) / total) * 100).toFixed(2);
               return `${pct}%`;
             },
             anchor: 'end',       // neo về đầu cột (phía phải với bar ngang)
@@ -142,7 +142,7 @@ const ByWardBarChart: React.FC<ByWardBarChartProps> = ({ data }) => {
     scales: {
       x: {
         beginAtZero: true,
-        grid: { color: '#e9ecef' },
+        grid: { display: false },
         ticks: { font: { size: 10 } },
       },
       y: {

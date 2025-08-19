@@ -1,0 +1,31 @@
+{
+  "summary": {
+    "values": 3,
+    "soNguoiChet": 1,
+    "soNguoiBiThuong": 0,
+    "thietHaiTaiSan": 6250000,
+    "dienTichRung": 0
+  },
+  "soVuTheoThang": [
+    { "thang": 1, "soVu": 1 },
+    { "thang": 2, "soVu": 2 },
+    { "thang": 3, "soVu": 0 }
+  ],
+  "nguyenNhan": [
+    { "content": "Chưa rõ nguyên nhân", "values": 2 },
+    { "content": "Do sự cố hệ thống, thiết bị điện", "values": 1 }
+  ],
+  "phanLoaiCoSo": [
+    { "loai": "Nhà ở đơn lẻ", "soVu": 2 },
+    { "loai": "Loại hình khác", "soVu": 1 }
+  ],
+  "phuong": [
+    { "content": "Long Bình", "values": 3 },
+    { "content": "Thảo Điền", "values": 2},
+    { "content": "An Khánh", "values": 2},
+    { "content": "Trường Thọ", "values": 1},
+    { "content": "Bình Trung Tây", "values": 1},
+    { "content": "Thạnh Mỹ Lợi", "values": 1},
+    { "content": "Linh Chiểu", "values": 1}
+  ]
+}
