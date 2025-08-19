@@ -25,7 +25,7 @@ const ExcelBox: React.FC<ExcelBoxProps> = ({ onClose }) => {
         const wsPhanLoaiCoso = XLSX.utils.json_to_sheet(Data.phanLoaiCoSo);
         XLSX.utils.book_append_sheet(workbook, wsPhanLoaiCoso, "Phân loại cơ sở");
 
-        const wsPhanLoaiTheophuong = XLSX.utils.json_to_sheet(Data.phuong);
+        const wsPhanLoaiTheophuong = XLSX.utils.json_to_sheet(Data.phanLoaiTheophuong);
         XLSX.utils.book_append_sheet(workbook, wsPhanLoaiTheophuong, "Phân loại theo phường");
 
         const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });

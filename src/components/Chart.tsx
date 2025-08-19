@@ -31,7 +31,7 @@ const Charts: React.FC = () => {
         <Col md={4}>
           <Card className="h-100 bg-purple-light">
             <Card.Body>
-              <ByWardBarChart data={data.phuong} />
+              <ByWardBarChart data={data.phanLoaiTheophuong} />
             </Card.Body>
           </Card>
         </Col>
