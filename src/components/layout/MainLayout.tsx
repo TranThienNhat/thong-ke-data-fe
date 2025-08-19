@@ -6,7 +6,7 @@ import Sidebar from "./../layout/Sidebar";
 import ExcelBox from "../layout/ExcelBox";
 
 const MainLayout: React.FC = () => {
-  const [showExcel, setShowExcel] = useState(true);
+  const [showExcel, setShowExcel] = useState(false);
 
   return (
     <Container fluid style={{ height: "100vh", backgroundColor: "e6ecf8" }}>
