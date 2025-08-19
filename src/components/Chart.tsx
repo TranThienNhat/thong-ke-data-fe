@@ -2,19 +2,7 @@ import React from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 import DoughnutChart from './chart/DonutChart';
 import ByWardBarChart from './chart/ByWardBarChart';
-const sampleData = [
-  { content: "Long Bình", values: 3 },
-  { content: "Thảo Điền", values: 2 },
-  { content: "An Khánh", values: 2 },
-  { content: "Trường Thọ", values: 1 },
-  { content: "Bình Trung Tây", values: 1 },
-  { content: "Thạnh Mỹ Lợi", values: 1 },
-  { content: "Linh Chiểu", values: 1 },
-];
-const sampleData2 = [
-  { content: 'Thiệt hại', values: 2 },
-  { content: 'Nguyên nhân', values: 1 },
-];
+import data from '../data/dashboard.json'
 
 const Charts: React.FC = () => {
   return (
@@ -43,7 +31,7 @@ const Charts: React.FC = () => {
         <Col md={4}>
           <Card className="h-100 bg-purple-light">
             <Card.Body>
-              <ByWardBarChart data={sampleData} />
+              <ByWardBarChart data={data.phuong} />
             </Card.Body>
           </Card>
         </Col>
@@ -56,7 +44,7 @@ const Charts: React.FC = () => {
               <h6 className="mb-0">Nguyên nhân</h6>
             </Card.Text>
             <Card.Body>
-              <DoughnutChart data={sampleData2} />
+              <DoughnutChart data={data.nguyenNhan} />
             </Card.Body>
           </Card>
         </Col>
