@@ -6,10 +6,22 @@ import InjuriesCard from "./card/InjuriesCard";
 import DamageCard from "./card/DamageCard";
 import ForestAreaCard from "./card/ForestAreaCard";
 
-import dashboard from "../data/dashboard.json";
+interface Summary {
+  values: number;
+  soNguoiChet: number;
+  soNguoiBiThuong: number;
+  thietHaiTaiSan: number;
+  dienTichRung: number;
+}
 
-const StatsCards: React.FC = () => {
-  const summary = dashboard.summary;
+interface Props {
+  summary?: Summary;
+}
+
+const StatsCards: React.FC<Props> = ({ summary }) => {
+  if (!summary) {
+    return <div>Đang tải dữ liệu...</div>;
+  }
 
   return (
     <Row className="mb-4">
