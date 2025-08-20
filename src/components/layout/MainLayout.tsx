@@ -7,39 +7,33 @@ import dashboard from "../../data/dashboard.json";
 import ExcelBox from "../layout/ExcelBox";
 
 const MainLayout: React.FC = () => {
-  const [summary, setSummary] = useState(dashboard.summary);
+  const [summary, setSummary] = useState(dashboard.summary);
+  const [showExcel, setShowExcel] = useState(false);
 
-  const [showExcel, setShowExcel] = useState(false);
+  return (
+    <Container fluid style={{ height: "100vh", backgroundColor: "#e6ecf8" }}>
+      <Row className="h-100">
+        {/* Sidebar */}
+        <Col md={2} className="border-end p-0">
+          <Sidebar onFilterChange={setSummary} />
+        </Col>
 
-  return (
-    <Container fluid style={{ height: "100vh", backgroundColor: "#e6ecf8" }}>
-      {/* Header */}
-      <Row
-        style={{ height: "60px", backgroundColor: "#0d6efd", color: "white" }}
-      >
-        <Header onClickExcel={() => setShowExcel(!showExcel)} />
-      </Row>
+        {/* Main Content: Header + Outlet */}
+        <Col md={10} className="d-flex flex-column p-0">
+          {/* Header */}
+          <div style={{ height: "60px", overflowY: "auto", backgroundColor: "#e6ecf8", color: "#e6ecf8", marginLeft: "100px" }}>
+            <Header onClickExcel={() => setShowExcel(!showExcel)} />
+          </div>
 
-      {/* Body */}
-      <Row style={{ height: "calc(100% - 60px)" }}>
-        {/* Sidebar */}
-        <Col
-          md={2}
-          style={{ backgroundColor: "white" }}
-          className="p-3 border-end"
-        >
-          <Sidebar onFilterChange={setSummary} />
-        </Col>
-
-        {/* Content */}
-        <Col md={10} style={{ backgroundColor: "white" }} className="p-3">
-          {showExcel && <ExcelBox onClose={() => setShowExcel(false)} />}
-          {/* truyền summary qua Outlet */}
-          <Outlet context={{ summary }} />
-        </Col>
-      </Row>
-    </Container>
-  );
+          {/* Content */}
+          <div className="flex-grow-1 p-3" style={{ backgroundColor: "#fff", overflowY: "auto", marginLeft: "10px"  }}>
+            {showExcel && <ExcelBox onClose={() => setShowExcel(false)} />}
+            <Outlet context={{ summary }} />
+          </div>
+        </Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default MainLayout;

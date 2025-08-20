@@ -1,150 +1,179 @@
 import React, { useState } from "react";
-import { Card, Dropdown } from "react-bootstrap";
-import dashboard from "../../data/dashboard.json";
-
-interface Filters {
-  year: number;
-  month: number;
-  ward: string;
-}
+import { Card } from "react-bootstrap";
+import { FaFilter, FaBars } from "react-icons/fa"; // Thêm icon từ thư viện react-icons
 
 interface SidebarProps {
-  onFilterChange: (summary: typeof dashboard.summary) => void;
+  onFilterChange: (year: number, month: number | null, ward: string) => void;
 }
 
+const wards = [
+  "An Khánh",
+  "Bình Trưng Tây",
+  "Linh Chiểu",
+  "Long Bình",
+  "Thành Mỹ Lợi",
+  "Thảo Điền",
+  "Trường Thọ",
+];
+
 const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
-  const currentYear = new Date().getFullYear();
+  const [year, setYear] = useState<number>(2023);
+  const [month, setMonth] = useState<number | null>(null);
+  const [selectedWard, setSelectedWard] = useState<string>("");
 
-  const [filters, setFilters] = useState<Filters>({
-    year: currentYear,
-    month: 0,
-    ward: "",
-  });
-
-  const applyFilter = (newFilters: Filters) => {
-    setFilters(newFilters);
-
-    let newSummary = { ...dashboard.summary };
-
-    // lọc theo tháng
-    if (newFilters.month > 0) {
-      const monthData = dashboard.soVuTheoThang.find(
-        (m) => m.month === newFilters.month
-      );
-      if (monthData) {
-        newSummary.values = monthData.values;
-      }
-    }
-
-    // lọc theo phường
-    if (newFilters.ward) {
-      const wardData = dashboard.phanLoaiTheophuong.find(
-        (w) => w.content === newFilters.ward
-      );
-      if (wardData) {
-        newSummary.values = wardData.values;
-      }
-    }
-
-    // lọc theo năm (giả lập: khác currentYear thì về 0)
-    if (newFilters.year !== currentYear) {
-      newSummary = {
-        values: 0,
-        soNguoiChet: 0,
-        soNguoiBiThuong: 0,
-        thietHaiTaiSan: 0,
-        dienTichRung: 0,
-      };
-    }
-
-    //gọi callback để báo cho DashboardPage cập nhật
-    onFilterChange(newSummary);
+  const commonBtnStyle = {
+    borderColor: "#b9cce8",
+    color: "#000",
+    borderRadius: "0.25rem",
+    height: "35px",
   };
 
   return (
-    <Card className="border-0">
-      <Card.Header className="bg-light">
-        <h6 className="mb-0">Bộ lọc</h6>
-      </Card.Header>
-      <Card.Body>
-        {/* Dropdown Năm */}
-        <div className="mb-3">
-          <label className="fw-bold d-block mb-1">Năm</label>
-          <Dropdown>
-            <Dropdown.Toggle variant="outline-secondary" size="sm">
-              {filters.year}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {[2025, 2024, 2023].map((y) => (
-                <Dropdown.Item
-                  key={y}
-                  active={filters.year === y}
-                  onClick={() => applyFilter({ ...filters, year: y })}
-                >
-                  {y}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
+<div>
+{/* Box Năm */}
+<Card className="border-2 mb-3">
+  <Card.Body className="p-3">
+    <div className="d-flex justify-content-start align-items-center" style={{ height: "40px" }}>
+      <button
+        className="btn btn-sm"
+        style={{
+          ...commonBtnStyle,
+          backgroundColor: year === 2023 ? "#b9cce8" : "transparent",
+          border: year === 2023 ? "1px solid #b9cce8" : "1px solid #ced4da",
+          color: year === 2023 ? "#000" : "#6c757d",
+          width: "60px",
+          borderRadius: "8px",
+          marginRight: "15px"
+        }}
+        onClick={() => {
+          setYear(2023);
+          onFilterChange(2023, month, selectedWard);
+        }}
+      >
+        2023
+      </button>
+      <button
+        className="btn btn-sm"
+        style={{
+          ...commonBtnStyle,
+          backgroundColor: year === 2024 ? "#b9cce8" : "transparent",
+          border: year === 2024 ? "1px solid #b9cce8" : "1px solid #ced4da",
+          color: year === 2024 ? "#000" : "#6c757d",
+          width: "60px",
+          borderRadius: "8px",
+          marginRight: "15px"
+        }}
+        onClick={() => {
+          setYear(2024);
+          onFilterChange(2024, month, selectedWard);
+        }}
+      >
+        2024
+      </button>
+      <button
+        className="btn btn-sm"
+        style={{
+          ...commonBtnStyle,
+          backgroundColor: year === 2025 ? "#b9cce8" : "transparent",
+          border: year === 2025 ? "1px solid #b9cce8" : "1px solid #ced4da",
+          color: year === 2025 ? "#000" : "#6c757d",
+          width: "60px",
+          borderRadius: "8px",
+          marginRight: "15px"
+        }}
+        onClick={() => {
+          setYear(2025);
+          onFilterChange(2025, month, selectedWard);
+        }}
+      >
+        2025
+      </button>
+    </div>
+  </Card.Body>
+</Card>
 
-        {/* Dropdown Tháng */}
-        <div className="mb-3">
-          <label className="fw-bold d-block mb-1">Tháng</label>
-          <Dropdown>
-            <Dropdown.Toggle variant="outline-secondary" size="sm">
-              {filters.month === 0 ? "Tất cả" : `Tháng ${filters.month}`}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item
-                active={filters.month === 0}
-                onClick={() => applyFilter({ ...filters, month: 0 })}
-              >
-                Tất cả
-              </Dropdown.Item>
-              {dashboard.soVuTheoThang.map((item) => (
-                <Dropdown.Item
-                  key={item.month}
-                  active={filters.month === item.month}
-                  onClick={() => applyFilter({ ...filters, month: item.month })}
-                >
-                  Tháng {item.month}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
 
-        {/* Dropdown Phường */}
-        <div className="mb-3">
-          <label className="fw-bold d-block mb-1">Phường</label>
-          <Dropdown>
-            <Dropdown.Toggle variant="outline-secondary" size="sm">
-              {filters.ward === "" ? "Tất cả" : filters.ward}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item
-                active={filters.ward === ""}
-                onClick={() => applyFilter({ ...filters, ward: "" })}
-              >
-                Tất cả
-              </Dropdown.Item>
-              {dashboard.phanLoaiTheophuong.map((ward) => (
-                <Dropdown.Item
-                  key={ward.content}
-                  active={filters.ward === ward.content}
-                  onClick={() =>
-                    applyFilter({ ...filters, ward: ward.content })
-                  }
+      {/* Box Tháng */}
+      <Card className="border-2 mb-3">
+        <Card.Body className="p-3">
+          <div
+            className="d-grid"
+            style={{
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: "8px",
+            }}
+          >
+            {Array.from({ length: 12 }).map((_, index) => {
+              const m = index + 1;
+              return (
+                <button
+                  key={index}
+                  className="btn btn-sm"
+                  style={{
+                    ...commonBtnStyle,
+                    backgroundColor: month === m ? "#b9cce8" : "#f4f8fe",
+                    height: "30px",
+                    width: "100%",
+                  }}
+                  onClick={() => {
+                    setMonth(m);
+                    onFilterChange(year, m, selectedWard);
+                  }}
                 >
-                  {ward.content}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-      </Card.Body>
-    </Card>
+                  {m < 10 ? `0${m}` : m}
+                </button>
+              );
+            })}
+          </div>
+        </Card.Body>
+      </Card>
+
+      {/* Box Phường */}
+      <Card className="border-2 p-0 h-100" style={{ height: "100%" }}>
+        <Card.Header className="bg-light d-flex justify-content-between align-items-center" style={{ height: "50px" }}>
+          <h6 className="mb-0">Phường</h6>
+          <div>
+            <FaBars className="me-2 text-secondary" style={{ cursor: 'pointer' }} />
+            <FaFilter className="text-secondary" style={{ cursor: 'pointer' }} />
+          </div>
+        </Card.Header>
+        <Card.Body className="p-2">
+          {wards.map((w) => (
+            <button
+              key={w}
+              className="w-100 mb-2 btn btn-sm text-start"
+              style={{
+                ...commonBtnStyle,
+                height: "auto", 
+                backgroundColor: selectedWard === w ? "#b9cce8" : "#f4f8fe",
+                padding: "8px 12px", 
+              }}
+              onClick={() => {
+                setSelectedWard(w);
+                onFilterChange(year, month, w);
+              }}
+            >
+              {w}
+            </button>
+          ))}
+          <button
+            className="w-100 btn btn-sm text-start"
+            style={{
+              backgroundColor: "#f4f4f4",
+              color: "#999",
+              borderColor: "#ddd",
+              padding: "8px 12px",
+            }}
+            onClick={() => {
+              setSelectedWard("");
+              onFilterChange(year, month, "");
+            }}
+          >
+            (blank)
+          </button>
+        </Card.Body>
+      </Card>
+    </div>
   );
 };
 
