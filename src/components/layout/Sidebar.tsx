@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card } from "react-bootstrap";
-import { FaFilter, FaBars } from "react-icons/fa"; // Thêm icon từ thư viện react-icons
+import { FaFilter, FaBars } from "react-icons/fa";
 
 interface SidebarProps {
   onFilterChange: (year: number, month: number | null, ward: string) => void;
@@ -29,7 +29,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
   };
 
   return (
-<div>
+<div style={{ height: "1030px" }}>
 {/* Box Năm */}
 <Card className="border-2 mb-3">
   <Card.Body className="p-3">
