@@ -23,7 +23,7 @@ const Header: React.FC = () => {
   style={{
     backgroundColor: '#fff',
     border: '1px solid #000',
-    padding: '8px',
+    padding: '3px',
     display: 'inline-block',
     borderRadius: '6px',
     fontWeight: 500,
