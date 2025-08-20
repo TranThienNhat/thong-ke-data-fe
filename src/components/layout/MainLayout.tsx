@@ -11,7 +11,7 @@ const MainLayout: React.FC = () => {
   const [showExcel, setShowExcel] = useState(false);
 
   return (
-    <Container fluid style={{ height: "100vh", backgroundColor: "#e6ecf8" }}>
+    <Container fluid style={{ height: "100vh" }} className="bg-purple-light">
       <Row className="h-100">
         {/* Sidebar */}
         <Col md={2} className="border-end p-0">
