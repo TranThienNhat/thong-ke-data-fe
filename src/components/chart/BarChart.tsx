@@ -24,6 +24,15 @@ interface BarChartProps {
     type: 'soVu' | 'thietHai' | 'phanLoaiPhuong' | 'phanLoaiCoSo';
 }
 
+// Hàm tiện dụng
+const getCssVar = (name: string) =>
+  getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
+
+// Lấy màu
+const datasetColor = getCssVar('--datasets-color');
+
 const BarChart: React.FC<BarChartProps> = ({ data, type }) => {
     const isSoVu = type === 'soVu';
     const isThietHai = type === 'thietHai'
@@ -48,7 +57,7 @@ const BarChart: React.FC<BarChartProps> = ({ data, type }) => {
                 {
                     label: 'Số vụ',
                     data: values,                    // vẽ theo số tuyệt đối
-                    backgroundColor: '#5172a1',
+                    backgroundColor: datasetColor,
                     borderRadius: 4,
                     maxBarThickness: 28,
                 },
@@ -95,7 +104,7 @@ const BarChart: React.FC<BarChartProps> = ({ data, type }) => {
                             anchor: 'end' as const,
                             align: 'end' as const,
                             offset: 4,
-                            color: '#4b5563',
+                            color: "#4b5563s",
                             font: { weight: 'bold' },
                             display: isPhanLoaiPhuong ? true : false
                         },

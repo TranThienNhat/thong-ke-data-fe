@@ -1,11 +1,5 @@
 import React from "react";
 import { Row, Col, Card } from "react-bootstrap";
-import TotalCasesCard from "./card/TotalCasesCard";
-import DeathsCard from "./card/DeathsCard";
-import InjuriesCard from "./card/InjuriesCard";
-import DamageCard from "./card/DamageCard";
-import ForestAreaCard from "./card/ForestAreaCard";
-import { color } from "chart.js/helpers";
 
 interface Summary {
   values: number;
@@ -27,7 +21,7 @@ const StatsCards: React.FC<Props> = ({ summary }) => {
   return (
     <Row className="mb-4">
       <Col>
-        <Card className="shadow-sm" style={{ backgroundColor: "#3e4e58" }}>
+        <Card className="shadow-sm" style={{ backgroundColor: "var(--stats-card-color)" }}>
           <Card.Body className="py-2 px-3"> {/* giảm padding */}
             <div className="d-flex flex-column">
               <span className="text-center text-white small mb-1 text-truncate">
@@ -44,7 +38,7 @@ const StatsCards: React.FC<Props> = ({ summary }) => {
         </Card>
       </Col>
       <Col>
-        <Card className="shadow-sm" style={{ backgroundColor: "#3e4e58" }}>
+        <Card className="shadow-sm" style={{ backgroundColor: "var(--stats-card-color)" }}>
           <Card.Body className="py-2 px-3"> {/* giảm padding */}
             <div className="d-flex flex-column">
               <span className="text-center text-white small mb-1 text-truncate">
@@ -61,7 +55,7 @@ const StatsCards: React.FC<Props> = ({ summary }) => {
         </Card>
       </Col>
       <Col >
-        <Card className="shadow-sm" style={{ backgroundColor: "#3e4e58" }}>
+        <Card className="shadow-sm" style={{ backgroundColor: "var(--stats-card-color)" }}>
           <Card.Body className="py-2 px-3"> {/* giảm padding */}
             <div className="d-flex flex-column">
               <span className="text-center text-white small mb-1 text-truncate">
@@ -78,7 +72,7 @@ const StatsCards: React.FC<Props> = ({ summary }) => {
         </Card>
       </Col>
       <Col >
-        <Card className="shadow-sm" style={{ backgroundColor: "#3e4e58" }}>
+        <Card className="shadow-sm" style={{ backgroundColor: "var(--stats-card-color)" }}>
           <Card.Body className="py-2 px-3"> {/* giảm padding */}
             <div className="d-flex flex-column">
               <span className="text-center text-white small mb-1 text-truncate">
@@ -95,7 +89,7 @@ const StatsCards: React.FC<Props> = ({ summary }) => {
         </Card>
       </Col>
       <Col >
-        <Card className="shadow-sm" style={{ backgroundColor: "#3e4e58" }}>
+        <Card className="shadow-sm" style={{ backgroundColor: "var(--stats-card-color)" }}>
           <Card.Body className="py-2 px-3"> {/* giảm padding */}
             <div className="d-flex flex-column">
               <span className="text-center text-white small mb-1 text-truncate">

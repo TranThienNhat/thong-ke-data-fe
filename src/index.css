@@ -5,8 +5,9 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  background-color: #e6e5f6;
+  --stats-card-color: #3e4e58;
+  --datasets-color: #5172a1;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -77,3 +78,4 @@ button:focus-visible {
 .bg-purple-light {
   background-color: #e6e5f6 !important; /* tím nhạt */
 }
+

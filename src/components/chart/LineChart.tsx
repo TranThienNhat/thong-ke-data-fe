@@ -9,6 +9,15 @@ interface LineChartProps {
     type: "soNguoiChet" | "soNguoiBiThuong";
 }
 
+// Hàm tiện dụng
+const getCssVar = (name: string) =>
+    getComputedStyle(document.documentElement)
+        .getPropertyValue(name)
+        .trim();
+
+// Lấy màu
+const datasetColor = getCssVar('--datasets-color');
+
 const LineChart: React.FC<LineChartProps> = ({ data, type }) => {
     const isSoNguoiChet = type === "soNguoiChet";
     const labels = data.map(i => i.month);
@@ -18,11 +27,11 @@ const LineChart: React.FC<LineChartProps> = ({ data, type }) => {
         datasets: [
             {
                 data: values,
-                borderColor: '#4a90e2',
+                borderColor: datasetColor,
                 backgroundColor: 'transparent',
                 tension: 0,
-                pointBackgroundColor: '#4a90e2',
-                pointBorderColor: '#4a90e2',
+                pointBackgroundColor: datasetColor,
+                pointBorderColor: datasetColor,
                 pointRadius: 4,
             },
         ],
