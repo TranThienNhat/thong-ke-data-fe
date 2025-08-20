@@ -1,7 +1,10 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 
-const Header: React.FC = () => {
+type HeaderProps = {
+    onClickExcel: () => void;   // hàm callback từ Layout
+};
+const Header: React.FC<HeaderProps> = ({onClickExcel}) => {
   return (
     <div className="d-flex justify-content-between align-items-center px-3 py-2 border-bottom bg-light">
       {/* Logo + Title */}
@@ -36,9 +39,9 @@ const Header: React.FC = () => {
         <Button size="sm" variant="outline-primary">
           Chi tiết
         </Button>
-        <Button size="sm" variant="outline-primary">
+        <Button size="sm" variant="outline-primary" onClick={onClickExcel}>
           Dữ liệu
-        </Button>
+        </Button >
       </div>
     </div>
   );

@@ -5,16 +5,20 @@ interface Props {
 }
 
 const DamageCard: React.FC<Props> = ({ value }) => {
-  const formatted = new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-    maximumFractionDigits: 0,
-  }).format(value);
+  const formatTrieu = (v: number) => {
+    const trieu = v / 1_000_000;
+    // Giữ tối đa 2 số lẻ, dùng dấu chấm
+    const n = trieu.toLocaleString("en-US", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+    });
+    return `${n} tr`;
+  };
 
   return (
-    <div className="p-4 text-center">
-      <h6 className="text-muted">Thiệt hại tài sản</h6>
-      <h4 className="fw-bold">{formatted}</h4>
+    <div className="p-4 text-center text-white" >
+      <h6 className="text-white">Thiệt hại tài sản</h6>
+      <h4 className="fw-bold">{formatTrieu(value)}</h4>
     </div>
   );
 };

@@ -59,7 +59,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, type }) => {
     };
 
     return (
-        <div style={{ height: '250px' }}>
+        <div className='w-100 h-100'>
             <Line data={lineData} options={chartOptions} />
         </div>
     );

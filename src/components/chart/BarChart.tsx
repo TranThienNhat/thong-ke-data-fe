@@ -121,7 +121,7 @@ const BarChart: React.FC<BarChartProps> = ({ data, type }) => {
         };
 
         return (
-            <div style={{ height: 260 }}>
+            <div className='w-100 h-100'>
                 <Bar data={chartData} options={chartOptions} />
             </div>
         );
@@ -145,7 +145,7 @@ const BarChart: React.FC<BarChartProps> = ({ data, type }) => {
             maintainAspectRatio: false,
             layout: {
                 padding: {
-                    top: 16,
+                    top: 0,
                     right: 0,
                     left: 0,
                     bottom: 0,
@@ -186,7 +186,7 @@ const BarChart: React.FC<BarChartProps> = ({ data, type }) => {
             },
         };
         return (
-            <div style={{ height: 200 }}>
+            <div className='w-100 h-100'>
                 <Bar data={barData} options={chartOptions} />
             </div>
         );

@@ -29,16 +29,16 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
     // lọc theo tháng
     if (newFilters.month > 0) {
       const monthData = dashboard.soVuTheoThang.find(
-        (m) => m.thang === newFilters.month
+        (m) => m.month === newFilters.month
       );
       if (monthData) {
-        newSummary.values = monthData.soVu;
+        newSummary.values = monthData.values;
       }
     }
 
     // lọc theo phường
     if (newFilters.ward) {
-      const wardData = dashboard.phuong.find(
+      const wardData = dashboard.phanLoaiTheophuong.find(
         (w) => w.content === newFilters.ward
       );
       if (wardData) {
@@ -104,11 +104,11 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
               </Dropdown.Item>
               {dashboard.soVuTheoThang.map((item) => (
                 <Dropdown.Item
-                  key={item.thang}
-                  active={filters.month === item.thang}
-                  onClick={() => applyFilter({ ...filters, month: item.thang })}
+                  key={item.month}
+                  active={filters.month === item.month}
+                  onClick={() => applyFilter({ ...filters, month: item.month })}
                 >
-                  Tháng {item.thang}
+                  Tháng {item.month}
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
@@ -129,7 +129,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
               >
                 Tất cả
               </Dropdown.Item>
-              {dashboard.phuong.map((ward) => (
+              {dashboard.phanLoaiTheophuong.map((ward) => (
                 <Dropdown.Item
                   key={ward.content}
                   active={filters.ward === ward.content}
