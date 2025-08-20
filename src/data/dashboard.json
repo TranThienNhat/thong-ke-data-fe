@@ -1,0 +1,82 @@
+{
+  "summary": {
+    "values": 3,
+    "soNguoiChet": 1,
+    "soNguoiBiThuong": 0,
+    "thietHaiTaiSan": 6250000,
+    "dienTichRung": 0
+  },
+  "soVuTheoThang": [
+    { "month": 1, "values": 1  },
+    { "month": 2, "values": 2 },
+    { "month": 3, "values": 0 },
+    { "month": 4, "values": 1 },
+    { "month": 5, "values": 2 },
+    { "month": 6, "values": 0 },
+    { "month": 7, "values": 3 },
+    { "month": 8, "values": 0 },
+    { "month": 9, "values": 0 },
+    { "month": 10, "values": 4 },
+    { "month": 11, "values": 0 },
+    { "month": 12, "values": 0 }
+  ],
+  "thietHaiTheoThang": [
+  { "month": 1, "values": 20000000 },
+  { "month": 2, "values": 35000000 },
+  { "month": 3, "values": 10000000 },
+  { "month": 4, "values": 5000000 },
+  { "month": 5, "values": 28000000 },
+  { "month": 6, "values": 15000000 },
+  { "month": 7, "values": 42000000 },
+  { "month": 8, "values": 8000000 },
+  { "month": 9, "values": 30000000 },
+  { "month": 10, "values": 25000000 },
+  { "month": 11, "values": 12000000 },
+  { "month": 12, "values": 40000000 }
+],
+"soNguoiChetTheoThang": [
+  { "month": 1, "values": 2 },
+  { "month": 2, "values": 5 },
+  { "month": 3, "values": 1 },
+  { "month": 4, "values": 0 },
+  { "month": 5, "values": 3 },
+  { "month": 6, "values": 2 },
+  { "month": 7, "values": 6 },
+  { "month": 8, "values": 1 },
+  { "month": 9, "values": 4 },
+  { "month": 10, "values": 3 },
+  { "month": 11, "values": 2 },
+  { "month": 12, "values": 5 }
+],
+"soNguoiBiThuongTheoThang": [
+  { "month": 1, "values": 2 },
+  { "month": 2, "values": 5 },
+  { "month": 3, "values": 1 },
+  { "month": 4, "values": 0 },
+  { "month": 5, "values": 3 },
+  { "month": 6, "values": 2 },
+  { "month": 7, "values": 6 },
+  { "month": 8, "values": 1 },
+  { "month": 9, "values": 4 },
+  { "month": 10, "values": 3 },
+  { "month": 11, "values": 2 },
+  { "month": 12, "values": 5 }
+],
+  "nguyenNhan": [
+    { "content": "Chưa rõ nguyên nhân", "values": 2 },
+    { "content": "Do sự cố hệ thống, thiết bị điện", "values": 1 }
+  ],
+  "phanLoaiCoSo": [
+    { "content": "Nhà ở đơn lẻ", "values": 2 },
+    { "content": "Loại hình khác", "values": 1 }
+  ],
+  "phanLoaiTheophuong": [
+    { "content": "Long Bình", "values": 3 },
+    { "content": "Thảo Điền", "values": 2},
+    { "content": "An Khánh", "values": 2},
+    { "content": "Trường Thọ", "values": 1},
+    { "content": "Bình Trung Tây", "values": 1},
+    { "content": "Thạnh Mỹ Lợi", "values": 1},
+    { "content": "Linh Chiểu", "values": 1}
+  ]
+}
