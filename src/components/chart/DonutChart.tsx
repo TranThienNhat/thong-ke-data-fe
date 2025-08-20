@@ -25,8 +25,8 @@ const doughnutOptions: ChartOptions<'doughnut'> = {
       labels: { usePointStyle: true, padding: 20, font: { size: 10 } },
     },
     datalabels: {
-      color: '#fff',
-      font: { weight: 'bold' },
+      color: 'black',
+      font: { weight: 'bold' ,size: 20},
       formatter: (value: number, ctx) => {
         const arr = (ctx.chart.data.datasets?.[0]?.data as number[]) ?? [];
         const sum = arr.reduce((a, b) => a + b, 0);
@@ -38,7 +38,7 @@ const doughnutOptions: ChartOptions<'doughnut'> = {
   },
 };
 
-const DEFAULT_COLORS = ['#4a5568', '#e53e3e', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
+const DEFAULT_COLORS = ['#5172a1', '#e53e3e', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
 
 const DoughnutChart: React.FC<DoughnutChartProps> = ({ data }) => {
   const labels = data.map(i => i.content);
@@ -56,7 +56,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({ data }) => {
   };
 
   return (
-    <div style={{ height: 250 }}>
+    <div className='w-100 h-100'>
       <Doughnut data={doughnutData} options={doughnutOptions} />
     </div>
   );
