@@ -11,8 +11,11 @@ const MainLayout: React.FC = () => {
   const [showExcel, setShowExcel] = useState(false);
 
   return (
-    <Container fluid style={{ height: "100vh" }} className="bg-purple-light">
-      <Row className="h-100">
+<Container
+  fluid
+  className="hide-scrollbar bg-purple-light"
+  style={{ height: "100vh", overflowY: "auto" }}
+>      <Row className="h-100">
         {/* Sidebar */}
         <Col md={2} className="border-end p-0">
           <Sidebar onFilterChange={setSummary} />
@@ -21,7 +24,7 @@ const MainLayout: React.FC = () => {
         {/* Main Content: Header + Outlet */}
         <Col md={10} className="d-flex flex-column p-0">
           {/* Header */}
-          <div style={{ height: "60px", overflowY: "auto", backgroundColor: "#e6ecf8", color: "#e6ecf8", marginLeft: "100px" }}>
+          <div style={{ height: "60px", color: "#e6ecf8", marginLeft: "100px" }} className="bg-purple-light" >
             <Header onClickExcel={() => setShowExcel(!showExcel)} />
           </div>
 
