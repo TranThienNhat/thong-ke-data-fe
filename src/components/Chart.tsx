@@ -4,9 +4,20 @@ import DoughnutChart from './chart/DonutChart';
 import BarChart from './chart/BarChart';
 import LineChart from './chart/LineChart';
 import TreemapChart from './chart/TreeMapChart';
-import data from '../data/dashboard.json'
 
-const Charts: React.FC = () => {
+interface ChartProps {
+  data: {
+    soVuTheoThang: { month: number; values: number }[]; // mảng nhiều tháng
+    nguyenNhan: { content: string; values: number }[];
+    thietHaiTheoThang: { month: number; values: number }[];
+    soNguoiChetTheoThang: { month: number; values: number }[];
+    soNguoiBiThuongTheoThang: { month: number; values: number }[];
+    phanLoaiTheophuong: { content: string; values: number }[];
+    phanLoaiCoSo: { content: string; values: number }[];
+  }
+}
+
+const Charts: React.FC<ChartProps> = ({ data }) => {
   return (
     <>
       <Row className="g-3 mb-4 align-items-stretch" >

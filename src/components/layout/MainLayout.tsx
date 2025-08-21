@@ -3,12 +3,16 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
 import Header from "./../layout/Header";
 import Sidebar from "./../layout/Sidebar";
-import dashboard from "../../data/dashboard.json";
 import ExcelBox from "../layout/ExcelBox";
 
 const MainLayout: React.FC = () => {
-  const [summary, setSummary] = useState(dashboard.summary);
-  const [showExcel, setShowExcel] = useState(false);
+  const [showExcel, setShowExcel] = useState(false);
+  const [filters, setFilters] = useState({
+    month: [],
+    year: '',
+    ward: []
+  });
+
 
   return (
 <Container
@@ -27,16 +31,16 @@ const MainLayout: React.FC = () => {
           <div style={{ height: "60px", color: "#e6ecf8", marginLeft: "100px" }} className="bg-purple-light" >
             <Header onClickExcel={() => setShowExcel(!showExcel)} />
           </div>
-
-          {/* Content */}
-          <div className="flex-grow-1 p-3" style={{ backgroundColor: "#fff", overflowY: "auto", marginLeft: "10px"  }}>
-            {showExcel && <ExcelBox onClose={() => setShowExcel(false)} />}
-            <Outlet context={{ summary }} />
-          </div>
-        </Col>
-      </Row>
-    </Container>
-  );
+          
+          {/* Content */}
+          <div className="flex-grow-1 p-3" style={{ backgroundColor: "#fff", overflowY: "auto", marginLeft: "10px" }}>
+            {showExcel && <ExcelBox onClose={() => setShowExcel(false)} />}
+            <Outlet context={{ filters }} />
+          </div>
+        </Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default MainLayout;
