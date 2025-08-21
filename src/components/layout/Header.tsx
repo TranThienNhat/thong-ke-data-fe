@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, ButtonGroup } from "react-bootstrap";
+import logoCompany from './logocongan.svg';
 
 type HeaderProps = {
     onClickExcel: () => void;   // hàm callback từ Layout
@@ -44,8 +45,6 @@ const Header: React.FC<HeaderProps> = ({ onClickExcel }) => {
                     <Button variant="outline-primary" style={{ backgroundColor: "#e6f0ff", borderColor: "#000000ff", fontWeight: 500, flex: 1 }}>NỔ</Button>
                 </ButtonGroup>
             </div>
-
-
 
             {/* Menu Buttons */}
             <div className="d-flex gap-2 align-items-center">

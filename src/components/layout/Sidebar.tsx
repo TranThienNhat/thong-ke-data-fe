@@ -20,6 +20,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
   const [year, setYear] = useState<number>(2023);
   const [month, setMonth] = useState<number | null>(null);
   const [selectedWard, setSelectedWard] = useState<string>("");
+  const [selectedMonths, setSelectedMonths] = useState<number[]>([]);
+  const [selectedYears, setSelectedYears] = useState<number[]>([2023, 2024, 2025]);
 
   const commonBtnStyle = {
     borderColor: "#b9cce8",
@@ -93,40 +95,49 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
 </Card>
 
 
-      {/* Box Tháng */}
-      <Card className="border-2 mb-3">
-        <Card.Body className="p-3">
-          <div
-            className="d-grid"
+{/* Box Tháng */}
+<Card className="border-2 mb-3">
+  <Card.Body className="p-3">
+    <div
+      className="d-grid"
+      style={{
+        gridTemplateColumns: "repeat(3, 1fr)",
+        gap: "8px",
+      }}
+    >
+      {Array.from({ length: 12 }).map((_, index) => {
+        const m = index + 1;
+        const isSelected = selectedMonths.includes(m);
+        return (
+          <button
+            key={index}
+            className="btn btn-sm"
             style={{
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "8px",
+              ...commonBtnStyle,
+              backgroundColor: isSelected ? "#b9cce8" : "#f4f8fe",
+              height: "30px",
+              width: "100%",
+            }}
+            onClick={() => {
+              let updatedMonths: number[];
+              if (isSelected) {
+                // Bỏ chọn
+                updatedMonths = selectedMonths.filter((item) => item !== m);
+              } else {
+                // Chọn thêm
+                updatedMonths = [...selectedMonths, m];
+              }
+              setSelectedMonths(updatedMonths);
+              onFilterChange(year, updatedMonths, selectedWard);
             }}
           >
-            {Array.from({ length: 12 }).map((_, index) => {
-              const m = index + 1;
-              return (
-                <button
-                  key={index}
-                  className="btn btn-sm"
-                  style={{
-                    ...commonBtnStyle,
-                    backgroundColor: month === m ? "#b9cce8" : "#f4f8fe",
-                    height: "30px",
-                    width: "100%",
-                  }}
-                  onClick={() => {
-                    setMonth(m);
-                    onFilterChange(year, m, selectedWard);
-                  }}
-                >
-                  {m < 10 ? `0${m}` : m}
-                </button>
-              );
-            })}
-          </div>
-        </Card.Body>
-      </Card>
+            {m < 10 ? `0${m}` : m}
+          </button>
+        );
+      })}
+    </div>
+  </Card.Body>
+</Card>
 
       {/* Box Phường */}
       <Card className="border-2 p-0 h-100" style={{ height: "100%" }}>

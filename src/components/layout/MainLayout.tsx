@@ -13,21 +13,25 @@ const MainLayout: React.FC = () => {
     ward: []
   });
 
-  return (
-    <Container fluid className="bg-purple-light">
-      <Row className="h-100">
-        {/* Sidebar */}
-        <Col md={2} className="border-end p-0">
-          <Sidebar onFilterChange={() => setFilters} />
-        </Col>
 
-        {/* Main Content: Header + Outlet */}
-        <Col md={10} className="d-flex flex-column p-0">
-          {/* Header */}
-          <div className="bg-purple-light" style={{ height: "60px", overflowY: "auto", backgroundColor: "#e6ecf8", marginLeft: "100px" }}>
-            <Header onClickExcel={() => setShowExcel(!showExcel)} />
-          </div>
+  return (
+<Container
+  fluid
+  className="hide-scrollbar bg-purple-light"
+  style={{ height: "100vh", overflowY: "auto" }}
+>      <Row className="h-100">
+        {/* Sidebar */}
+        <Col md={2} className="border-end p-0">
+          <Sidebar onFilterChange={setSummary} />
+        </Col>
 
+        {/* Main Content: Header + Outlet */}
+        <Col md={10} className="d-flex flex-column p-0">
+          {/* Header */}
+          <div style={{ height: "60px", color: "#e6ecf8", marginLeft: "100px" }} className="bg-purple-light" >
+            <Header onClickExcel={() => setShowExcel(!showExcel)} />
+          </div>
+          
           {/* Content */}
           <div className="flex-grow-1 p-3" style={{ backgroundColor: "#fff", overflowY: "auto", marginLeft: "10px" }}>
             {showExcel && <ExcelBox onClose={() => setShowExcel(false)} />}
