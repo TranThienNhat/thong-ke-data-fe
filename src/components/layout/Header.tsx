@@ -20,31 +20,30 @@ const Header: React.FC<HeaderProps> = ({ onClickExcel }) => {
                     <span className="text-danger">Cháy, Nổ, CNCH</span>
                 </h5>
             </div>
-
-      {/* Filter Buttons */}
-<div
-  style={{
-    backgroundColor: '#fff',
-    border: '1px solid #000',
-    padding: '3px',
-    display: 'inline-block',
-    borderRadius: '6px',
-    fontWeight: 500,
-    color: '#000',
-    fontSize: '14px',
-    textAlign: 'center',
-    cursor: 'pointer',
-    margin: '0 10px',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-    minWidth: '400px',
-  }}
->
-  <ButtonGroup className="d-flex gap-2 align-items-center" style={{ width: '100%' }}>
-    <Button variant="outline-primary" style={{ backgroundColor: "#e6f0ff", borderColor: "#000000ff", fontWeight: 500, flex: 1 }}>CNCH</Button>
-    <Button variant="outline-primary" style={{ backgroundColor: "#e6f0ff", borderColor: "#000000ff", fontWeight: 500, flex: 1 }}>CHÁY</Button>
-    <Button variant="outline-primary" style={{ backgroundColor: "#e6f0ff", borderColor: "#000000ff", fontWeight: 500, flex: 1 }}>NỔ</Button>
-  </ButtonGroup>
-</div>
+            {/* Filter Buttons */}
+            <div
+                style={{
+                    backgroundColor: '#fff',
+                    border: '1px solid #000',
+                    padding: '3px',
+                    display: 'inline-block',
+                    borderRadius: '6px',
+                    fontWeight: 500,
+                    color: '#000',
+                    fontSize: '14px',
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    margin: '0 10px',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    minWidth: '400px',
+                }}
+            >
+                <ButtonGroup className="d-flex gap-2 align-items-center" style={{ width: '100%' }}>
+                    <Button variant="outline-primary" style={{ backgroundColor: "#e6f0ff", borderColor: "#000000ff", fontWeight: 500, flex: 1 }}>CNCH</Button>
+                    <Button variant="outline-primary" style={{ backgroundColor: "#e6f0ff", borderColor: "#000000ff", fontWeight: 500, flex: 1 }}>CHÁY</Button>
+                    <Button variant="outline-primary" style={{ backgroundColor: "#e6f0ff", borderColor: "#000000ff", fontWeight: 500, flex: 1 }}>NỔ</Button>
+                </ButtonGroup>
+            </div>
 
 
 
