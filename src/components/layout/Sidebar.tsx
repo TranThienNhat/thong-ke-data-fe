@@ -1,187 +1,135 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Card } from "react-bootstrap";
-import { FaFilter, FaBars } from "react-icons/fa";
+import api from "../../routes/appRoute";
 
-interface SidebarProps {
-  onFilterChange: (year: number, month: number | null, ward: string) => void;
+type Ward = { wardId: number; wardName: string };
+
+interface Filters {
+  years: number[];
+  months: number[];
+  wards: number[];
 }
 
-const wards = [
-  "An Khánh",
-  "Bình Trưng Tây",
-  "Linh Chiểu",
-  "Long Bình",
-  "Thành Mỹ Lợi",
-  "Thảo Điền",
-  "Trường Thọ",
-];
+interface SidebarProps {
+
+  onFilterChange: (dashboardData: any) => void;
+}
 
 const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
-  const [year, setYear] = useState<number>(2023);
-  const [month, setMonth] = useState<number | null>(null);
-  const [selectedWard, setSelectedWard] = useState<string>("");
-  const [selectedMonths, setSelectedMonths] = useState<number[]>([]);
-  const [selectedYears, setSelectedYears] = useState<number[]>([2023, 2024, 2025]);
+  const [years, setYears] = useState<number[]>([]);
+  const [wards, setWards] = useState<Ward[]>([]);
+  const [filters, setFilters] = useState<Filters>({
+    years: [],
+    months: [],
+    wards: [],
+  });
 
-  const commonBtnStyle = {
-    borderColor: "#b9cce8",
-    color: "#000",
-    borderRadius: "0.25rem",
-    height: "35px",
-  };
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const [y, w] = await Promise.all([api.get("/years"), api.get("/wards")]);
+        setYears(y.data?.data ?? y.data ?? []);
+        setWards(w.data ?? []);
+      } catch (e) {
+        console.error("Load danh mục thất bại", e);
+      }
+    })();
+  }, []);
+
+  // helper build query
+  const queryString = useMemo(() => {
+    const p = new URLSearchParams();
+    if (filters.years.length > 0) p.set("year", String(filters.years[0])); // FE của bạn chỉ lọc 1 năm
+    if (filters.months.length > 0) {
+      // BE hiện nhận 1 month? nếu nhiều tháng hãy thay bằng month= & month=
+      p.set("month", String(filters.months[0]));
+    }
+    filters.wards.forEach((id) => p.append("wardIds", String(id)));
+    return p.toString();
+  }, [filters]);
+
+  // gọi dashboard mỗi khi bộ lọc đổi
+  useEffect(() => {
+    (async () => {
+      try {
+        const url = `/dashboard${queryString ? `?${queryString}` : ""}`;
+        const res = await api.get(url);
+        onFilterChange(res.data?.data ?? res.data);
+      } catch (e) {
+        console.error("Load dashboard thất bại", e);
+        onFilterChange(null as any);
+      }
+    })();
+  }, [queryString, onFilterChange]);
+
+  // UI rất gọn (bạn có thể giữ UI cũ), quan trọng là không còn dùng JSON
   return (
-<div style={{ height: "1030px" }}>
-{/* Box Năm */}
-<Card className="border-2 mb-3">
-  <Card.Body className="p-3">
-    <div className="d-flex justify-content-start align-items-center" style={{ height: "40px" }}>
-      <button
-        className="btn btn-sm"
-        style={{
-          ...commonBtnStyle,
-          backgroundColor: year === 2023 ? "#b9cce8" : "transparent",
-          border: year === 2023 ? "1px solid #b9cce8" : "1px solid #ced4da",
-          color: year === 2023 ? "#000" : "#6c757d",
-          width: "60px",
-          borderRadius: "8px",
-          marginRight: "15px"
-        }}
-        onClick={() => {
-          setYear(2023);
-          onFilterChange(2023, month, selectedWard);
-        }}
-      >
-        2023
-      </button>
-      <button
-        className="btn btn-sm"
-        style={{
-          ...commonBtnStyle,
-          backgroundColor: year === 2024 ? "#b9cce8" : "transparent",
-          border: year === 2024 ? "1px solid #b9cce8" : "1px solid #ced4da",
-          color: year === 2024 ? "#000" : "#6c757d",
-          width: "60px",
-          borderRadius: "8px",
-          marginRight: "15px"
-        }}
-        onClick={() => {
-          setYear(2024);
-          onFilterChange(2024, month, selectedWard);
-        }}
-      >
-        2024
-      </button>
-      <button
-        className="btn btn-sm"
-        style={{
-          ...commonBtnStyle,
-          backgroundColor: year === 2025 ? "#b9cce8" : "transparent",
-          border: year === 2025 ? "1px solid #b9cce8" : "1px solid #ced4da",
-          color: year === 2025 ? "#000" : "#6c757d",
-          width: "60px",
-          borderRadius: "8px",
-          marginRight: "15px"
-        }}
-        onClick={() => {
-          setYear(2025);
-          onFilterChange(2025, month, selectedWard);
-        }}
-      >
-        2025
-      </button>
-    </div>
-  </Card.Body>
-</Card>
-
-
-{/* Box Tháng */}
-<Card className="border-2 mb-3">
-  <Card.Body className="p-3">
-    <div
-      className="d-grid"
-      style={{
-        gridTemplateColumns: "repeat(3, 1fr)",
-        gap: "8px",
-      }}
-    >
-      {Array.from({ length: 12 }).map((_, index) => {
-        const m = index + 1;
-        const isSelected = selectedMonths.includes(m);
-        return (
-          <button
-            key={index}
-            className="btn btn-sm"
-            style={{
-              ...commonBtnStyle,
-              backgroundColor: isSelected ? "#b9cce8" : "#f4f8fe",
-              height: "30px",
-              width: "100%",
-            }}
-            onClick={() => {
-              let updatedMonths: number[];
-              if (isSelected) {
-                // Bỏ chọn
-                updatedMonths = selectedMonths.filter((item) => item !== m);
-              } else {
-                // Chọn thêm
-                updatedMonths = [...selectedMonths, m];
-              }
-              setSelectedMonths(updatedMonths);
-              onFilterChange(year, updatedMonths, selectedWard);
-            }}
-          >
-            {m < 10 ? `0${m}` : m}
-          </button>
-        );
-      })}
-    </div>
-  </Card.Body>
-</Card>
-
-      {/* Box Phường */}
-      <Card className="border-2 p-0 h-100" style={{ height: "100%" }}>
-        <Card.Header className="bg-light d-flex justify-content-between align-items-center" style={{ height: "50px" }}>
-          <h6 className="mb-0">Phường</h6>
-          <div>
-            <FaBars className="me-2 text-secondary" style={{ cursor: 'pointer' }} />
-            <FaFilter className="text-secondary" style={{ cursor: 'pointer' }} />
-          </div>
-        </Card.Header>
-        <Card.Body className="p-2">
-          {wards.map((w) => (
+    <div className="p-2" style={{ background: "#eef1fb", height: "100%" }}>
+      <Card className="mb-3">
+        <Card.Header className="fw-bold">Năm</Card.Header>
+        <Card.Body className="d-flex flex-wrap gap-2">
+          {years.map((y) => (
             <button
-              key={w}
-              className="w-100 mb-2 btn btn-sm text-start"
-              style={{
-                ...commonBtnStyle,
-                height: "auto", 
-                backgroundColor: selectedWard === w ? "#b9cce8" : "#f4f8fe",
-                padding: "8px 12px", 
-              }}
-              onClick={() => {
-                setSelectedWard(w);
-                onFilterChange(year, month, w);
-              }}
+              key={y}
+              className={`btn btn-sm ${filters.years.includes(y) ? "btn-primary" : "btn-outline-primary"}`}
+              onClick={() =>
+                setFilters((f) => ({
+                  ...f,
+                  years: f.years.includes(y) ? [] : [y],
+                }))
+              }
             >
-              {w}
+              {y}
             </button>
           ))}
-          <button
-            className="w-100 btn btn-sm text-start"
-            style={{
-              backgroundColor: "#f4f4f4",
-              color: "#999",
-              borderColor: "#ddd",
-              padding: "8px 12px",
-            }}
-            onClick={() => {
-              setSelectedWard("");
-              onFilterChange(year, month, "");
-            }}
-          >
-            (blank)
-          </button>
+        </Card.Body>
+      </Card>
+      
+      <Card className="mb-3">
+        <Card.Header className="fw-bold">Tháng</Card.Header>
+        <Card.Body className="d-grid" style={{ gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
+          {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+            <button
+              key={m}
+              className={`btn btn-sm ${filters.months.includes(m) ? "btn-secondary" : "btn-outline-secondary"}`}
+              onClick={() =>
+                setFilters((f) => ({
+                  ...f,
+                  months: f.months.includes(m) ? [] : [m],
+                }))
+              }
+            >
+              {String(m).padStart(2, "0")}
+            </button>
+          ))}
+        </Card.Body>
+      </Card>
+
+      <Card>
+        <Card.Header className="fw-bold">Phường</Card.Header>
+        <Card.Body className="d-flex flex-column gap-2">
+          {wards.length ? (
+            wards.slice(0, 10).map((w) => {
+              const active = filters.wards.includes(w.wardId);
+              return (
+                <button
+                  key={w.wardId}
+                  className={`btn btn-sm ${active ? "btn-success" : "btn-outline-success"}`}
+                  onClick={() =>
+                    setFilters((f) => ({
+                      ...f,
+                      wards: active ? f.wards.filter((id) => id !== w.wardId) : [...f.wards, w.wardId],
+                    }))
+                  }
+                >
+                  {w.wardName}
+                </button>
+              );
+            })
+          ) : (
+            <p className="text-muted">Không có dữ liệu phường</p>
+          )}
         </Card.Body>
       </Card>
     </div>

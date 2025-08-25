@@ -1,10 +1,6 @@
 import React from "react";
 import Charts from "../components/Chart";
 import StatsCards from "../components/StatsCard";
-import { useState } from "react";
-import Data from "../data/dashboard.json";
-import { Row, Col } from "react-bootstrap";
-import Sidebar from "../components/layout/Sidebar";
 import { useOutletContext } from "react-router-dom";
 
 interface DashboardContext {
@@ -22,7 +18,7 @@ const DashboardPage: React.FC = () => {
   return (
     <div>
       <StatsCards summary={summary} />
-      <Charts />
+      <Charts/>
     </div>
   );
 };
